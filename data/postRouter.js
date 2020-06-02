@@ -49,8 +49,21 @@ router.post("/:id/comments", (req, res) => {
 
 router.get("/", (req, res) => {
   db.find()
-    .then((article) => {
-      res.status(200).json(article);
+    .then((posts) => {
+      res.status(200).json(posts);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ error: "The posts information could not be retrieved." });
+    });
+});
+
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+  db.findById(id)
+    .then((posts) => {
+      res.status(200).json(posts);
     })
     .catch((err) => {
       res
